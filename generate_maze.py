@@ -3,8 +3,8 @@ import maze
 
 # Create maze using Pre-Order DFS maze creation algorithm
 def create_dfs(m):
-    # TODO: Implement create_dfs
-    pass
+    while m.w_cells < m.total_cells:
+        pass
 
 
 def main():
