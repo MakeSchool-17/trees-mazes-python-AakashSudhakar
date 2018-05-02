@@ -62,8 +62,7 @@ class Maze:
 
         # Iterates four times
         for iterator in range(4):
-            new_x = x + COMPASS[iterator][0]
-            new_y = y = COMPASS[iterator][1]
+            new_x, new_y = x + COMPASS[iterator][0], y + COMPASS[iterator][1]
             
             # Checks if x-pos and y-pos is in maze bounds
             if self.cell_in_bounds(new_x, new_y):
