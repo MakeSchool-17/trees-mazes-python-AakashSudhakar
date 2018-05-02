@@ -1,22 +1,22 @@
 import maze
-import random
-
+from random import choice
 
 # Create maze using Pre-Order DFS maze creation algorithm
 def create_dfs(m):
     """ Maze creation algorithm utilizing pre-order depth-first tree traversal. """
-    # choose a cell index at random from the grid to be current cell
-    current_cell = random.randint
-    visited_cells, backtrack_stack = 1, list()  # Sets visited cells to one and creates backtrack stack
+    curr = choice(m.total_cells)            # Chooses cell index at random from grid to be current cell
+    print(curr)
+    visited, backtrack_stack = 1, list()    # Sets visited cells to one and creates backtrack stack
 
     while m.w_cells < m.total_cells:            # While visited cells is less than total cells
     #     get unvisited neighbors using cell_neighbors
-        if m.cell_neighbors(cell) >= 1:         # If at least one neighbor
+        unvisited = m.cell_neighbors(curr)      # Gets unvisited neighbors using cell_neighbors()
+        if m.cell_neighbors(curr) >= 1:         # If at least one neighbor
     #         choose random neighbor to be new cell
     #         knock down wall between it and current cell using connect_cells
     #         push current cell to stack
     #         set current cell to new cell
-            visited_cells += 1                  # Increments visited cells by one
+            visited += 1                  # Increments visited cells by one
         else:
     #         pop from stack to current cell
             pass

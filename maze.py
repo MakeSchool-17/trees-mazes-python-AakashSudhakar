@@ -68,12 +68,15 @@ class Maze:
             # Checks if x-pos and y-pos is in maze bounds
             if self.cell_in_bounds(new_x, new_y):
                 new_cell = self.cell_index(new_x, new_y)
-
                 # Checks if state command is 'create'
                 if self.state == "create":
                     # Checks if new cell pos doesn't conflict wth wall
                     if not (self.maze_array[new_cell] & WALL_BITS):
                        neighbors.append((new_cell, iterator))
+                    elif self.state == "solve":
+                        if (self.maze_array[cell] & WALLS[iterator]):
+                            if not (self.maze_array[new_cell] & (BACKTRACK_BITS | SOLUTION_BITS)):
+                                neighbors.append((new_cell, iterator))
         return neighbors
 
     # Connect two cells by knocking down the wall between them
@@ -106,7 +109,21 @@ class Maze:
     # Reconstruct path to start using backtrack bits
     def reconstruct_solution(self, cell):
         self.draw_visited_cell(cell)
-        # TODO: Logic for reconstructing solution path in BFS
+        prev_cell_bits = (self.maze_array[cell] & BACKTRACK_BITS) >> 12
+        try:
+            i = WALLS.index(prev_cell_bits)
+        except ValueError:
+            print("VALUE ERROR: BACKTRACK BITS INVALID!")
+        
+        x, y = self.x_y(cell)
+        prev_x, prev_y = x + COMPASS[i][0], y + COMPASS[i][1]
+        prev_cell = self.cell_index(prev_x, prev_y)
+
+        self.maze_array[prev_cell] |= (OPPOSITE_WALLS[i] << 8)
+        self.refresh_maze_view()
+
+        if prev_cell != 0:
+            self.reconstruct_solution(prev_cell)
 
     # Check if x, y values of cell are within bounds of maze
     def cell_in_bounds(self, x, y):
