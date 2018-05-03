@@ -36,8 +36,9 @@ def solve_bfs(m):
     queue, curr, in_direction, visited = list(), 0, "0b0000", 0
     queue.append((curr, in_direction))          # Enqueues current cell and direction to queue
 
-    while (curr != "goal") and len(queue) > 0:
-        queue.pop(0)                            # Dequeuueueueueueues first index
+    while curr != m.total_cells - 1 and len(queue) > 0:
+        
+        curr, in_direction = queue.pop(0)       # Dequeues element to current cell and in-direction
 
     m.state = "idle"                            # Sets state to idle
 
